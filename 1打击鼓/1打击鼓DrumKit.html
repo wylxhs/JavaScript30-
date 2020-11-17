@@ -100,8 +100,9 @@
     <audio data-key="75" src="./sounds/tom.wav"></audio>
     <audio data-key="76" src="./sounds/tink.wav"></audio>
     <script type="text/javascript">
+
         //1. 按下按键，播放对应声音
-        function playSound(e){
+        function playSound(e){            
             console.log(e.keyCode)
             const audio = document.querySelector(`audio[data-key="${e.keyCode}"`)
             const key = document.querySelector(`div[data-key="${e.keyCode}"`)
@@ -109,6 +110,7 @@
             audio.currentTime = 0
             audio.play()
             //2. 按下按键，改变该按键显示效果
+
             key.classList.add('playing')
             // setTimeout(function() {
             //     key.classList.remove('playing')
@@ -124,7 +126,20 @@
         keys.forEach(key => {
             key.addEventListener('transitionend', removePlaying)
         })
-        window.addEventListener("keydown", playSound)
+        //节流函数解决长按keydown时playing属性不会移除问题
+        var throttle = function(func, delay){
+            var prev = Date.now()
+            return function(){
+                var context = this
+                var args = arguments
+                var now = Date.now()
+                if(now - prev >= delay){
+                    func.apply(func, args)
+                    prev = Date.now()
+                }
+            }
+        }
+        window.addEventListener("keydown", throttle(playSound, 140))
         
     </script>
 </body>
