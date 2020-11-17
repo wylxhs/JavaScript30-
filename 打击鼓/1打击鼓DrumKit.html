@@ -114,6 +114,7 @@
             //     key.classList.remove('playing')
             // }, 70);
         })
+        //3. 效果显示后立马回复状态
         function removePlaying(e){
             if(e.propertyName != 'transform') return;
             this.classList.remove('playing')
@@ -123,7 +124,7 @@
         keys.forEach(key => {
             key.addEventListener('transitionend', removePlaying)
         })
-        //3. 效果显示后立马回复状态
+        
     </script>
 </body>
 </html>
