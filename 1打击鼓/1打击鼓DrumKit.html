@@ -101,7 +101,7 @@
     <audio data-key="76" src="./sounds/tink.wav"></audio>
     <script type="text/javascript">
         //1. 按下按键，播放对应声音
-        window.addEventListener("keydown", function(e){
+        function playSound(e){
             console.log(e.keyCode)
             const audio = document.querySelector(`audio[data-key="${e.keyCode}"`)
             const key = document.querySelector(`div[data-key="${e.keyCode}"`)
@@ -113,7 +113,7 @@
             // setTimeout(function() {
             //     key.classList.remove('playing')
             // }, 70);
-        })
+        }
         //3. 效果显示后立马回复状态
         function removePlaying(e){
             if(e.propertyName != 'transform') return;
@@ -124,6 +124,7 @@
         keys.forEach(key => {
             key.addEventListener('transitionend', removePlaying)
         })
+        window.addEventListener("keydown", playSound)
         
     </script>
 </body>
