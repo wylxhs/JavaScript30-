@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时钟Clock</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .clock{
+            position: relative;
+            height: 600px;
+            width: 600px;
+            margin: 0 auto;
+            background: url(./images/clock.jpg) no-repeat;
+        }
+        .clock div{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;            
+        }
+        .hour{
+            background: url(./images/hour.png) no-repeat center center;
+        }
+        .minute{
+            background: url(./images/minute.png) no-repeat center center;
+        }
+        .second{
+            background: url(./images/second.png) no-repeat center center;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="hour"></div>
+        <div class="minute"></div>
+        <div class="second"></div>
+    </div>
+    <script type="text/javascript">
+        let h = document.querySelector('.hour')
+        let m = document.querySelector('.minute')
+        let s = document.querySelector('.second')
+        function time(){
+            const date = new Date()
+            const hour = date.getHours()
+            const minute = date.getMinutes()
+            const second = date.getSeconds()
+            const millisecond = date.getMilliseconds()
+            const hDeg = hour * 30 + (minute/60) * 30
+            const mDeg = minute * 6 + (second/60) * 6
+            const sDeg = second * 6 + (millisecond/1000) * 6
+            h.style.transform = `rotate(${hDeg}deg)`
+            m.style.transform = `rotate(${mDeg}deg)`
+            s.style.transform = `rotate(${sDeg}deg)`
+        }
+        time()
+        setInterval(time,10)
+        
+    </script>
+</body>
+</html>
