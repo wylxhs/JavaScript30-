@@ -4,27 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数组操作</title>
-    <style>
-        .box { 
-            border: 1px solid #000; 
-            width: 100px;
-            height: 100px;
-            position: relative;
-        }
-        .red{
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            top: 20px;
-            left: 20px;
-            border: 1px solid red;
-        }
-    </style>
 </head>
 <body>
-    <div class="box">
-        <div class="red"></div>
-    </div>
     <em>Psst: have a look at the JavaScript Console</em>
     <script>
       // Get your shorts on - this is an array workout!
@@ -51,21 +32,36 @@
   
       // Array.prototype.filter()
       // 1. Filter the list of inventors for those who were born in the 1500's
-      // 1.
+      // 1.筛选1500-1600年代的人
+      const fifteen = inventors.filter(inventor => inventor.year >= 1500 && inventor.year <= 1600)
+      console.table(fifteen)
   
       // Array.prototype.map()
-      // 2. Give us an array of the inventors first and last names
-  
+      // 2. Give us an array of the inventors first and last names      
+      const fullName = inventors.map(inventor => `${inventor.first} ${inventor.last}` )
+      console.log(fullName)
+
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
+      const orders = inventors.sort((a, b) => {
+        return a.year-b.year;
+      })
+      console.log(orders)
   
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live all together?
+      const totalYear = inventors.reduce((total, inventor) => {
+        return total + (inventor.passed - inventor.year)
+      }, 0)
+      console.log(totalYear)
   
       // 5. Sort the inventors by years lived
+      const olderYear = inventors.sort((a, b) => (a.passed-a.year) - (b.passed-b.year))
+      console.log(olderYear)
   
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+      
   
   
       // 7. sort Exercise
