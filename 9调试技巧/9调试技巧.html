@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9调试技巧(Console Tricks)</title>
+</head>
+<body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
+    <span>sss</span>
+
+    <script type="text/javascript">
+      const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+  
+      function makeGreen() {
+        const p = document.querySelector('p');
+        p.style.color = '#BADA55';
+        p.style.fontSize = '50px';
+      }
+    
+    // Regular
+    console.log("hello")
+
+    // Interpolated
+    console.log("hi, my name is %s", "Mary")
+
+    // Styled
+    console.log('%c styled texts', 'font-size:32px; color: red')
+
+    // warning!
+    console.warn('waring error')
+
+    // Error :|
+    console.error('error message')
+
+    // Info
+    console.log('this is info')
+
+    // Testing
+    console.assert(1===2, 'that is wrong')
+
+    // clearing
+    console.clear()
+
+    // Viewing DOM Elements
+    // console.log(span)
+    // console.log([p])
+    // console.dir(p)
+
+
+    // Grouping together
+    dogs.forEach(dog => {
+        console.groupCollapsed(`${dog.name}`)        
+        console.log(`${dog.name}`)
+        console.log(`${dog.name} is ${dog.age} years old`)
+        console.log(`${dog.name} is ${dog.age*4} years old`)
+        console.groupEnd()
+    })
+    // counting
+    console.count('hello')
+    console.count('hello')
+    console.count('hello')
+    console.count('hello')
+    console.count('hello')
+    console.count('hello')
+    console.count('hello')
+
+    // timing
+    console.time('fetch my data')
+    fetch('https://api.github.com/users/soyaine')
+        .then(data => data.json())
+        .then(data => {
+            console.timeEnd('fetch my data')
+            console.log(data)
+        })
+    
+    //table
+    console.table(dogs)
+
+
+    var numbers = [10, 1, 23, 78, 120, 53, 22, 34, 91, -1]
+    
+    function bubble(arr){
+        var length = arr.length
+        for(var i = 0; i < length; i++){
+            for(var j = 0; j < length-i; j++){
+                var temp
+                if(arr[j] > arr[j+1]){
+                    temp = arr[j+1]
+                    arr[j+1] =arr[j]
+                    arr[j] = temp
+                }
+            }
+        }
+        return arr
+    }
+    
+    console.table(bubble(numbers))
+    </script>
+</body>
+</html>
