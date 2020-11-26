@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10shift多选</title>
+    <style>
+        html {
+            font-family: sans-serif;
+            background: #ff9d00;
+        }
+
+        .inbox {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #F1F1F1;
+        }
+
+        .item:last-child {
+            border-bottom: 0;
+        }
+
+
+        input:checked+p {
+            background: #F9F9F9;
+            text-decoration: line-through;
+        }
+
+        input[type="checkbox"] {
+            margin: 20px;
+        }
+
+        p {
+            margin: 0;
+            padding: 20px;
+            transition: background 0.2s;
+            flex: 1;
+            font-family: 'helvetica neue';
+            font-size: 20px;
+            font-weight: 200;
+            border-left: 1px solid #D1E2FF;
+        }
+
+        .details {
+            text-align: center;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="inbox">
+        <div class="item">
+            <input type="checkbox">
+            <p>这是一个邮件收件箱</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>选中一项</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>然后按住 Shift 键</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>选择另外一项</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>它们之间的都会被选中</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>试着实现这个功能</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>只用原生 JS </p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>Good Luck!</p>
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            <p>记得展示你的成果♪(^∇^*)</p>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const checkboxes = document.querySelectorAll('.inbox input[type=checkbox]')
+        let startChecked
+        function handleClick(e){
+            if(e.shiftKey && this.checked){
+                let isBetween = false
+                checkboxes.forEach(checkbox => {
+                    if(checkbox === startChecked || checkbox === this){
+                        isBetween = !isBetween
+                    }
+                    if(isBetween){
+                        checkbox.checked = true
+                    }
+                })
+            }
+            startChecked = this
+        }
+        checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleClick))
+    </script>
+</body>
+
+</html>
