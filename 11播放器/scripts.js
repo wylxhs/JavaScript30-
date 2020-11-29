@@ -23,9 +23,11 @@ function handleProgress(){
     const percent = (video.currentTime / video.duration) * 100
     progressBar.style.flexBasis = `${percent}%`
 }
-function handleProgressbar(){
-    
+function handleProgressbar(e){
+    const barTime = (e.offsetX / progress.offsetWidth) * video.duration
+    video.currentTime = barTime
 }
+let mousedown = false
 video.addEventListener('click', togglePlay)
 video.addEventListener('play', updateToggle)
 video.addEventListener('pause', updateToggle)
@@ -35,3 +37,6 @@ skipBtns.forEach(btn => btn.addEventListener('click', skip))
 ranges.forEach(range => range.addEventListener('change', handleRange))
 ranges.forEach(range => range.addEventListener('mousemove', handleRange))
 progress.addEventListener('click', handleProgressbar)
+progress.addEventListener('mousedown', () => mousedown = true)
+progress.addEventListener('mouseup', () => mousedown = false)
+progress.addEventListener('mousemove', mousedown && handleProgress(e))
