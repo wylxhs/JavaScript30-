@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // 从 String、Number、Boolean 类型的值开始：
+
+    // 首先我们有一个数组
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // 现在我们想要复制它
+    const players2 = players
+    console.log(players, players2)
+
+    // 也许你觉得可以直接这样修改复制后的数组:
+    players[3] = 'San';
+    console.log(players, players2)
+    let name = 'hello'
+    let name2 = name
+    console.log(name, name2)
+    name = 'ella'
+    console.log(name, name2)
+
+    // 但我们修改这个数组的时候会发生什么呢？
+
+    // 这就是问题所在
+
+    // NO！ 原数组也被修改过了
+
+    // 为什么？因为 team 只是这个数组的引用，并不是它的复制。team 和 players 指向的是同一个数组。
+
+    // 所以如何解决这个问题？下面来进行真正的复制吧。
+    const players3 = Array.from(players)
+    players3[3] = 'red'
+    console.log(players, players3)
+    
+
+
+
+    // one day
+
+    // 或者创建一个新数组，然后用 concat 方法来获取它
+    const players5 = [].concat(players)
+    players5[3] = 'yello'
+    console.log(players, players5)
+
+    // 再或者用 ES6 里面的扩展语法
+    const players4 = [...players]
+    players4[3] = 'blue'
+    console.log(players, players4)
+
+    // 现在再修改 team5，原数组不会变了
+
+    // 对 Object 类型的数据来说也是一样的，我们用一个 person 例子来说明
+    const person = {
+        name: 'jos',
+        age: 29
+    }
+    const dev = person
+    dev.name = '🍇'
+    console.log(dev, person)
+
+    // 现在又一个 Object 对象
+    const dev2 = Object.assign({}, person, {name: 'apple'})
+    console.log(dev2, person)
+    // 然后以为这样可以复制它:
+
+    // 到底要怎样才能真正得到它的复制版呢？
+    const dev3 = {...person}
+    dev3.name = 'banana'
+    console.log(dev3, person)
+    // 我们满怀期望的希望扩展语法对它也会生效
+    const author = {
+        name: 'android',
+        age: 23,
+        social: {
+            wechat: 'android~~',
+            facebook:'android~~face'
+        }
+    }
+    const author2 = Object.assign({}, author)
+    author2.name = 'apple'
+    // author2.social.wechat = 'apple~~~~'
+    console.log(author2, author)
+    const author3 = JSON.parse(JSON.stringify(author))
+    author3.social.wechat = 'apple~~~~'
+    console.log(author3, author)
+
+    // 需要注意的是：这里的例子里面，我们用的数组和对象都只是一层嵌套，Lodash 有一个深度复制的方法，但你使用之前需要多考虑一下。
+
+  </script>
+
+</body>
+</html>
