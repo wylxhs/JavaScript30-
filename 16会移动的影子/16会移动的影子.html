@@ -3,11 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>16会移动的影子</title>
+    <title>16会移动的影子（Mouse Shadow）</title>
 </head>
 <body>
-    <script type="text/javascript">
 
-    </script>
-</body>
-</html>
+    <div class="code">
+      <h1>Coding</h1>
+    </div>
+    <style>
+    html {
+      color:black;
+      background-color: rgb(248, 152, 26);
+      font-family: sans-serif;
+    }
+  
+    body {
+      margin: 0;
+    }
+  
+    .code {
+      min-height: 100vh;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      color:#fff;
+    }
+  
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0,0,0,0.4);
+      font-size: 100px;
+    }
+    </style>
+  
+  <script>
+      const code = document.querySelector(".code")
+      const text = code.querySelector('h1')
+      const r = 100
+      function shadow(e){
+        const {offsetWidth: width, offsetHeight: height} = code
+        let {offsetX: x, offsetY: y} = e
+        if(this != e.target){
+            x = x + e.target.offsetLeft
+            y = y + e.target.offsetRight
+        }
+        const xR = Math.round((x / width) * r - r / 2)
+        const yR = Math.round((y / height) * r - r / 2)
+        text.style.textShadow = `
+            ${xR}px ${yR}px 0 rgba(0,0,0,0.4)
+        `
+      }
+
+      code.addEventListener("mousemove", shadow)
+  </script>
+  </body>
+  </html>
+  
