@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>19语音识别</title>
+    <style>
+        html{
+            background-color: rgb(247, 118, 12);           
+        }
+        body{
+            width: 100%;
+        }
+        .words{
+            margin: 50px auto;
+            width: 500px;
+            height: 100%;
+            padding: 10px;
+            background-color: #fff;
+            color: #000;
+            font-size: 20px;
+            line-height: 30px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="words" contenteditable>
+
+    </div>
+    <script type="text/javascript">
+        window.SpeechRecognition = window.SpeechRecognition || window.
+        webkitSpeechRecognition
+        const recognition = new SpeechRecognition()
+        recognition.interimResults = true
+        recognition.lang = 'zh-Hans'
+        let p = document.createElement('p')
+        const words = document.querySelector('.words')
+        words.appendChild(p)
+        recognition.addEventListener('result', e => {
+            // console.log(e.results)
+            const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+            p.textContent = transcript
+            if(e.results[0].isFinal){
+                p = document.createElement('p')
+                words.appendChild(p)
+            }
+            console.log(transcript)
+        })
+        recognition.addEventListener('end', recognition.start)
+        recognition.start()
+        // console.log(recognition)
+    </script>
+</body>
+</html>
