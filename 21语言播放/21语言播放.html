@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>21语音播放（Speech Synthesis）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="voiceinator">
+
+      <h1>语音播放器</h1>
+
+      <select name="voice" id="voices">
+        <option value="">选择语言</option>
+      </select>
+
+      <label for="rate">语速:</label>
+      <input name="rate" type="range" min="0" max="3" value="1" step="0.1">
+
+      <label for="pitch">音高:</label>
+
+      <input name="pitch" type="range" min="0" max="2" step="0.1">
+      <textarea name="text">Hello! I love JavaScript 👍</textarea>
+      <button id="stop">停止</button>
+      <button id="speak">开始</button>
+
+    </div>
+
+<script>
+  const msg = new SpeechSynthesisUtterance();
+  msg.text = document.querySelector('[name="text"]').value
+  const voicesDropdown = document.querySelector('[name="voice"]');
+  const options = document.querySelectorAll('[type="range"], [name="text"]');
+  const speakButton = document.querySelector('#speak');
+  const stopButton = document.querySelector('#stop');
+  let voices = [];
+  function toggle(startSpeak = true){
+      if(startSpeak){
+        speechSynthesis.speak(msg)
+      }else{
+        speechSynthesis.cancel(msg)
+      }
+  }
+  function showVoices(){
+      voices = this.getVoices()
+      const optionHTML = voices.map(voice => {
+          return `
+            <option value="${voice.lang}">${voice.name}(${voice.lang})</option>
+          `
+      }).join('')
+      voicesDropdown.innerHTML = optionHTML
+  }
+  function setVoice(){
+      msg.voice = voices.find(voice => voice.lang === this.value)
+      toggle()
+  }
+  function changeOption(){
+      msg[this.name] = this.value
+      toggle()
+  }
+
+  speakButton.addEventListener('click', () => toggle(true))
+  stopButton.addEventListener('click', () => toggle(false))
+  speechSynthesis.addEventListener('voiceschanged', showVoices)
+  voicesDropdown.addEventListener('change', setVoice)
+  options.forEach(option => option.addEventListener('change', changeOption))
+</script>
+
+</body>
+</html>
+
+
