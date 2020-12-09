@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23JavaScript事件的理解</title>
+    <style>
+        html{
+            box-sizing: border-box;
+        }
+        *, *:before, *:after{
+            box-sizing: inherit;
+        }
+        div{
+            width: 100%;
+            padding: 50px;
+        }
+        .one{
+            background-color: thistle;
+        }
+        .two{
+            background-color: mistyrose;
+        }
+        .three{
+            background-color: coral;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="one">
+        <div class="two">
+            <div class="three">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const divNodes = document.querySelectorAll('div');
+        function clickLog(e){
+            // 阻止冒泡
+            // e.stopPropagation();
+            console.log(this);
+        }
+        divNodes.forEach(divNode => divNode.addEventListener('click', clickLog, {
+            capture: true,
+            once: true
+        }));
+    </script>
+</body>
+</html>
