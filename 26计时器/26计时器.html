@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docume26计时器nt</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="timer">
+        <div class="timer__controls">
+          <button data-time="20" class="timer__button">20 秒</button>
+          <button data-time="300" class="timer__button">小休 5</button>
+          <button data-time="900" class="timer__button">打盹 15</button>
+          <button data-time="1200" class="timer__button">工作 20</button>
+          <button data-time="3600" class="timer__button">午餐 60</button>
+          <form name="customForm" id="custom">
+            <input type="text" name="minutes" placeholder="Enter Minutes">
+          </form>
+        </div>
+        <div class="display">
+          <h1 class="display__time-left"></h1>
+          <p class="display__end-time"></p>
+        </div>
+      </div>
+    <script type="text/javascript">
+        const timeDisplay = document.querySelector('.display__time-left');
+        const endTimeDisplay = document.querySelector('.display__end-time');
+        const buttons = document.querySelectorAll('[data-time]');
+        let secondDown;
+        function timer(seconds){
+            clearInterval(secondDown);
+            const now = Date.now();
+            const then = now + seconds * 1000;
+            showTimeLeft(seconds);
+            showEndTime(then);
+            secondDown = setInterval(() => {
+                const secondsLeft = Math.round(((then - Date.now()) / 1000));
+                if(secondsLeft < 0){
+                    clearInterval(secondDown);
+                    return;
+                }
+                showTimeLeft(secondsLeft);
+            }, 1000);            
+        }
+        function showTimeLeft(second){
+            const minutes = Math.floor(second / 60);
+            const remainSeconds = second % 60;
+            const display = `${minutes}:${remainSeconds < 10 ? '0' : ''}${remainSeconds}`;
+            timeDisplay.textContent = display;
+        }
+        function showEndTime(timestamp){
+            const end = new Date(timestamp);
+            const hours = end.getHours();
+            const minutes = end.getMinutes();
+            const endDisplay = `在${hours}:${minutes < 10 ? '0' : ''}${minutes}停止`;
+            endTimeDisplay.textContent = endDisplay;
+        }
+        function startTimer(){
+            const seconds = this.dataset.time;
+            timer(seconds);
+        }
+        buttons.forEach(button => button.addEventListener('click', startTimer));
+        document.customForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            const mins = this.minutes.value;
+            timer(mins * 60);
+        })
+    </script>
+</body>
+</html>
